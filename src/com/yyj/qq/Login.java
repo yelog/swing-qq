@@ -25,7 +25,7 @@ public class Login extends JFrame {
 	 * Create the frame.
 	 */
 	public Login() {
-		setTitle("厦门理工学院网络工程专用聊天工具");
+		setTitle("Lenovo专用聊天工具");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 444, 310);
 		contentPane = new JPanel();

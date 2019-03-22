@@ -19,7 +19,7 @@ public class ServerStart implements ActionListener {
 
 	private List<ClientThread> clients = new ArrayList<>();
 	private static Map<String, Socket> sockets = new HashMap<>();
-	Map<String, String> mess = new HashMap<String, String>();
+	Map<String, String> mess = new HashMap<>();
 	/**
 	 * 把信息发送给客户端的对象
 	 */

@@ -33,7 +33,7 @@ public class MyServer extends JFrame{
 
 		//创建主窗口
 		this.setBounds(200, 200, 300, 300);
-		this.setTitle("理工终端");
+		this.setTitle("终端");
 		this.setVisible(true);
 	}
 
