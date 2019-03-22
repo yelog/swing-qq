@@ -2,7 +2,6 @@ package com.yyj.qq;
 
 import java.awt.Color;
 import java.awt.Container;
-import java.awt.Image;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -102,14 +101,14 @@ public class Login extends JFrame {
 class thing1 extends Thread{
 	@Override
 	public void run() {
-		clientjava.wait.setVisible(true);
+		ClientStart.wait.setVisible(true);
 	}
 }
 
 class thing2 extends Thread{
 	@Override
 	public void run() {
-		new clientjava().connect();
+		new ClientStart().connect();
 	}
 }
 

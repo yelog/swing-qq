@@ -1,8 +1,6 @@
 package com.yyj.qq;
 
 import java.awt.TextField;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -17,15 +15,9 @@ import com.yyj.util.Translate;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.net.Socket;
 
 public class P2PClient extends JFrame implements ActionListener{
 
@@ -54,11 +46,11 @@ public class P2PClient extends JFrame implements ActionListener{
 				String str = P2PClient.jta1.getText().trim();
 				P2PClient.jta1.setText("");
 				P2PClient.jta.append(Login.name+"："+str+"\r\n");
-				clientjava.mess.clear();
-				clientjava.mess.put(P2PClient.name, str);
-				str = "私聊消息"+Translate.transMapToString(clientjava.mess);
+				ClientStart.mess.clear();
+				ClientStart.mess.put(P2PClient.name, str);
+				str = "私聊消息"+Translate.transMapToString(ClientStart.mess);
 				try {
-					clientjava.dos.writeUTF(str);
+					ClientStart.dos.writeUTF(str);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -98,7 +90,7 @@ public class P2PClient extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		try {
-			clientjava.dos.writeUTF("传输文件"+P2PClient.name);
+			ClientStart.dos.writeUTF("传输文件"+P2PClient.name);
 		} catch (IOException e3) {
 			// TODO Auto-generated catch block
 			e3.printStackTrace();
@@ -112,8 +104,8 @@ public class P2PClient extends JFrame implements ActionListener{
 					fis = new FileInputStream(file);
 					sendBytes = new byte[1024];
 					while ((length = fis.read(sendBytes, 0, sendBytes.length)) > 0) {
-						clientjava.dos.write(sendBytes, 0, length);
-						clientjava.dos.flush();
+						ClientStart.dos.write(sendBytes, 0, length);
+						ClientStart.dos.flush();
 					}
 				}catch(Exception e2){
 					e2.printStackTrace();

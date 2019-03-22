@@ -1,38 +1,28 @@
 package com.yyj.qq;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.net.Socket;
-import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
-
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.tree.DefaultMutableTreeNode;
 
 import com.yyj.util.LanIP;
 import com.yyj.util.Translate;
 
-public class clientjava implements ActionListener{
+import javax.swing.*;
+import javax.swing.tree.DefaultMutableTreeNode;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.*;
+import java.net.Socket;
+import java.net.UnknownHostException;
+import java.util.*;
+
+public class ClientStart implements ActionListener{
 	public static Socket s;
-	public static DataOutputStream dos;
+	static DataOutputStream dos;
 	private DataInputStream dis;
-	public static MyClient client;
-	public static ClientFrame mainframe;
+	static MyClient client;
+	private static ClientFrame mainframe;
 	private static Map<String,Socket> sockets=null;
-	public static Map<String,JFrame> jframes=new HashMap<String, JFrame>();
-	public static Map <String,String> mess = new HashMap<String,String>();
+	static Map<String,JFrame> jframes=new HashMap<>();
+	static Map <String,String> mess = new HashMap<>();
 	private static P2PClient p2p;
-	public static Wait wait;
+	static Wait wait;
 
 	public static void main(String[] args) {
 		new Login();
@@ -47,25 +37,28 @@ public class clientjava implements ActionListener{
 		P2PClient.jbt.addActionListener(this);
 
 		LanIP ip = new LanIP();
-		ArrayList<String> list=ip.getLanIPArrayList();
-		System.out.println(Arrays.asList(list));
-		for(int i=0;i<list.size();i++){
-			try {
-				s=new Socket(list.get(i),9988);
-				System.out.println(list.get(i));
-				break;
-			} catch (UnknownHostException e) {
-
-			} catch (IOException e) {
-
-			}
+//		ArrayList<String> list=ip.getLanIPArrayList();
+//		System.out.println(Arrays.asList(list));
+//		for(int i=0;i<list.size();i++){
+//			try {
+//				s=new Socket(list.get(i),9988);
+//				System.out.println(list.get(i));
+//				break;
+//			} catch (IOException ignored) {
+//
+//			}
+//		}
+		try {
+			s=new Socket("127.0.0.1",9988);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		wait.dispose();
 		mainframe.setVisible(true);
 		try {
 			dos = new DataOutputStream(s.getOutputStream());
 			dis = new DataInputStream(s.getInputStream());
-			new Thread(new SendThread()).start();//
+			new Thread(new SendThread()).start();
 
 //			InputStreamReader isr=new InputStreamReader(s.getInputStream());
 //			BufferedReader br=new BufferedReader(isr);
@@ -188,7 +181,6 @@ public class clientjava implements ActionListener{
 			try {
 				while(iConnect){
 					str = dis.readUTF();
-//                    MyClient.jta.append(str+"\r\n");
 					if(str.length()>=4&&!str.equals("传输文件")){
 						if(str.subSequence(0, 4).equals("获取好友")){
 							//创建好友的叶子
@@ -226,7 +218,7 @@ public class clientjava implements ActionListener{
 									p2pClient.setTitle(entry.getKey());
 									p2pClient.setVisible(true);
 									p2pClient.jta.append(entry.getKey()+":"+entry.getValue()+"\r\n");
-									clientjava.jframes.put(entry.getKey(), p2pClient);
+									ClientStart.jframes.put(entry.getKey(), p2pClient);
 
 								}
 
